@@ -1,40 +1,63 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
-hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
-  actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+title: PRISM
+description: A free, open ecosystem for resolving player identities across sports data providers.
+tableOfContents: false
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## Next steps
+PRISM is a free, open ecosystem of datasets and APIs for resolving player identities across sports data providers. Every provider assigns their own internal IDs — MLBAM, FanGraphs, Baseball Reference, and others all use different identifiers for the same player. Joining on player names is error-prone. PRISM gives every player a stable `prism_id` that ties all those identifiers together.
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+Currently covers MLB (~1,700 players), with NFL and NBA planned.
+
+## Components
+
+<CardGrid>
+  <LinkCard
+    title="Crosswalk"
+    href="/crosswalk"
+    description="Identifier mapping only — look up a player by any known ID and get back all the others."
+  />
+  <LinkCard
+    title="Registry"
+    href="/registry"
+    description="Enriches the crosswalk with metadata: names, birthdates, position, handedness, and roster status."
+  />
+</CardGrid>
+
+## Quick example
+
+Resolve Shohei Ohtani's MLBAM ID to all other namespaces:
+
+```
+GET https://crosswalk.prism.statsvine.com/mlb/players/by_id/mlbam/660271.json
+```
+
+```json
+{
+  "prism_id": "pr2r5vzrqm",
+  "mlbam_id": "660271",
+  "fangraphs_id": "19755",
+  "bbref_id": "ohtansh01",
+  "sfbb_id": "ohtansh01",
+  "yahoo_id": "10835",
+  "nfbc_id": "9810"
+}
+```
+
+## Built to last
+
+<CardGrid>
+  <Card title="Open data" icon="github">
+    Source CSV is public on GitHub and licensed ODC-By 1.0. Fork it, file a PR, or consume the raw exports directly.
+  </Card>
+  <Card title="Validated daily" icon="approve-check-circle">
+    Automated checks against MLB rosters, the Chadwick Bureau, FanGraphs, and SFBB surface stale or missing mappings before they reach you.
+  </Card>
+  <Card title="Stable schema" icon="puzzle">
+    Field names and file paths are treated as a public contract. Downstream systems can build on PRISM without watching for silent breakage.
+  </Card>
+  <Card title="Multiple formats" icon="document">
+    JSON, CSV, NDJSON, and gzipped variants — plus flat `by_id` lookup files for fast joins without a server.
+  </Card>
 </CardGrid>

@@ -6,19 +6,17 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			title: 'PRISM',
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/statsvine/prism' }],
 			sidebar: [
+				{ label: 'Philosophy', slug: 'philosophy' },
 				{
-					label: 'Guides',
+					label: 'Components',
 					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
+						{ label: 'Crosswalk', slug: 'crosswalk' },
+						{ label: 'Registry', slug: 'registry' },
+						{ label: 'Tools', slug: 'tools' },
 					],
-				},
-				{
-					label: 'Reference',
-					items: [{ autogenerate: { directory: 'reference' } }],
 				},
 			],
 		}),
