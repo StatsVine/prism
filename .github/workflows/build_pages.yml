@@ -1,15 +1,12 @@
 name: Deploy to GitHub Pages
 
+# This repo has no export build to wait on -- the site is built straight from
+# main -- so `push` is the live trigger.
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-  workflow_run:
-    workflows:
-      - Build and commit export files
-    types:
-      - completed
 
 
 permissions:
